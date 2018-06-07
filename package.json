@@ -4,7 +4,7 @@
   "description": "Create event traps for HaxBall RoomObject to be able to assign multiple handlers.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/EventTrapper.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,9 @@
     "url": "https://github.com/morko/haxroomie-EventTrapper/issues"
   },
   "homepage": "https://github.com/morko/haxroomie-EventTrapper#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "mocha": "^5.2.0",
+    "sinon": "^5.1.0"
+  }
 }

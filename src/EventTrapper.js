@@ -1,8 +1,27 @@
 module.exports = class EventTrapper {
 
   constructor(eventHandlerManager) {
-    if (!eventHandlerManager)
+    if (!eventHandlerManager) {
       throw new Error('Missing required argument: eventHandlerManager');
+    }
+
+    if (typeof eventHandlerManager.onEventHandlerSet !== 'function') {
+      throw new Error(
+        'Missing eventHandlerManager property: onEventHandlerSet'
+      );
+    }
+
+    if (typeof eventHandlerManager.onEventHandlerUnset !== 'function') {
+      throw new Error(
+        'Missing eventHandlerManager property: onEventHandlerUnset'
+      );
+    }
+
+    if (typeof eventHandlerManager.onExecuteEventHandlers !== 'function') {
+      throw new Error(
+        'Missing eventHandlerManager property: onExecuteEventHandlers'
+      );
+    }
 
     this.eventHandlerManager = eventHandlerManager;
   }
@@ -10,6 +29,8 @@ module.exports = class EventTrapper {
   createTrappedRoom(roomObject, identifier) {
     if (!roomObject) throw new Error('Missing required argument: roomObject');
     if (!identifier) throw new Error('Missing required argument: identifier');
+
+    let eventHandlerManager = this.eventHandlerManager;
 
     return new Proxy(roomObject, {
 
@@ -23,7 +44,7 @@ module.exports = class EventTrapper {
         // if value = falsy => interpretate that user is unsetting the handler
         if (!value) {
           try {
-            this.eventHandlerManager.onEventHandlerUnset(prop, identifier);
+            eventHandlerManager.onEventHandlerUnset(prop, identifier);
           } finally {
             return;
           }
@@ -34,12 +55,12 @@ module.exports = class EventTrapper {
         }
 
         try {
-          this.eventHandlerManager.onEventHandlerSet(prop, value, identifier);
+          eventHandlerManager.onEventHandlerSet(prop, value, identifier);
         } finally {
           // if the haxball room object does not have handler for this event yet
           if (!room[prop]) {
             room[prop] = (...args) => {
-              return this.eventHandlerManager.onExecuteEventHandlers(
+              return eventHandlerManager.onExecuteEventHandlers(
                 prop, ...args
               );
             }
@@ -56,7 +77,7 @@ module.exports = class EventTrapper {
           return;
         }
         try {
-          this.eventHandlerManager.onEventHandlerUnset(prop, identifier);
+          eventHandlerManager.onEventHandlerUnset(prop, identifier);
         } finally {
         }
       }
