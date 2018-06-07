@@ -26,7 +26,7 @@ normally.
 
 # Installation
 
-`npm install +git+https://git@github.com/morko/haxroomie-EventTrapper.git`
+`npm install git+https://git@github.com/morko/haxroomie-EventTrapper.git`
 
 For browsers you can use browserify.
 
@@ -59,7 +59,7 @@ const eventHandlerManager = {
 
 let eventTrapper = new EventTrapper(eventHandlerManager);
 
-let trappedRoom = eventTrapper.createTrappedRoom(fakeRoomObject);
+let trappedRoom = eventTrapper.createTrappedRoom(fakeRoomObject, 1);
 
 trappedRoom.onPlayerJoin = function(player) {};
 fakeRoomObject.onPlayerJoin({id: 3});
