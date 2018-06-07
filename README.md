@@ -1,20 +1,24 @@
 # Description
 
-haxroomie-event trapper is a module for intercepting the setting and removing 
-of HaxBall 
+This is a module for intercepting the setting and removing of HaxBall 
 [RoomObject](https://github.com/haxball/haxball-issues/wiki/Headless-Host#roomobject)
 event handlers. It has been made for a plugin system for the HaxBall
-headless in mind. It allows the plugin system set the event handlers like in
-normally with `=` operator.
+headless in mind.
+
+The module allows the plugins to set the event handlers 
+normally with `=` operator, but instead of overriding the previous handler the
+setting of the value will be redirected to be handled by a
+[eventHandlerManager](#eventHandlerManager) object.
 
 Instead of allowing a plugin to assign a handler to the 
 [RoomObject](https://github.com/haxball/haxball-issues/wiki/Headless-Host#roomobject),
 a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
-is created with the method 'createTrappedRoom' and injected to be used by the
+is created with the method `EventTrapper.createTrappedRoom` and injected to be used by the
 plugin instead. The created Proxy will intercept the 
 setting or unsetting the handlers and instead will inform the
-[eventHandlerManager](#eventHandlerManager) about the changes. Other properties 
-and methods of the
+[eventHandlerManager](#eventHandlerManager) about the changes. It will also redirect the execution
+of handlers in [RoomObject](https://github.com/haxball/haxball-issues/wiki/Headless-Host#roomobject)
+to [eventHandlerManager](#eventHandlerManager). Other properties and methods of the
 [RoomObject](https://github.com/haxball/haxball-issues/wiki/Headless-Host#roomobject)
 are available to be used through the
 [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
@@ -66,11 +70,11 @@ trappedRoom.onPlayerJoin = '';
 
 **eventHandlerManager** is an Object that should implement following functions:
 
-onEventHandlerSet(handler, callback, identifier)
-onEventHandlerUnset(handler, identifier)
-onExecuteEventHandlers(handler, ...args)
+- onEventHandlerSet(handler, callback, identifier)
+- onEventHandlerUnset(handler, identifier)
+- onExecuteEventHandlers(handler, ...args)
 
-Where ´handler´ is the name of the handler in
+Where `handler` is the name of the handler in
 [RoomObject](https://github.com/haxball/haxball-issues/wiki/Headless-Host#roomobject)
 (e.g. onPlayerJoin), `callback` is a
 [Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions)
