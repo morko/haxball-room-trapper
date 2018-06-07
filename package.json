@@ -1,0 +1,23 @@
+{
+  "name": "@haxroomie/EventTrapper",
+  "version": "1.0.0",
+  "description": "Create event traps for HaxBall RoomObject to be able to assign multiple handlers.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morko/haxroomie-EventTrapper.git"
+  },
+  "keywords": [
+    "HaxBall"
+  ],
+  "author": "Oskari Pöntinen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/morko/haxroomie-EventTrapper/issues"
+  },
+  "homepage": "https://github.com/morko/haxroomie-EventTrapper#readme",
+  "dependencies": {}
+}
