@@ -113,7 +113,7 @@ let eventHandlerManager = {
       }
     }
     if (!alreadySet) {
-      handlers.[handler].push({id: identifier, fn: callback});
+      handlers[handler].push({id: identifier, fn: callback});
     }
   },
 
