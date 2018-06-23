@@ -96,8 +96,8 @@ let eventHandlerManager = {
   handlers: {},
 
   onEventHandlerSet(handler, callback, identifier) {
-    if (!handlers[handler]) {
-      handlers[handler] = [{
+    if (!this.handlers[handler]) {
+      this.handlers[handler] = [{
         id: identifier,
         fn: callback
       }];
@@ -105,32 +105,32 @@ let eventHandlerManager = {
     }
 
     let alreadySet = false;
-    for (let i = 0; i < handlers[handler].length; i++) {
-      if(handlers[handler][i].id === identifier) {
-        handlers[handler][i].fn = callback;
+    for (let i = 0; i < this.handlers[handler].length; i++) {
+      if(this.handlers[handler][i].id === identifier) {
+        this.handlers[handler][i].fn = callback;
         alreadySet = true;
         break;
       }
     }
     if (!alreadySet) {
-      handlers[handler].push({id: identifier, fn: callback});
+      this.handlers[handler].push({id: identifier, fn: callback});
     }
   },
 
   onEventHandlerUnset(handler, identifier) {
-    if (!handlers[handler]) return;
-    for (let i = 0; i < handlers[handler].length; i++) {
-      if(handlers[handler][i].id === identifier) {
-        handlers[handler].splice(i, 1);
+    if (!this.handlers[handler]) return;
+    for (let i = 0; i < this.handlers[handler].length; i++) {
+      if(this.handlers[handler][i].id === identifier) {
+        this.handlers[handler].splice(i, 1);
       }
     }
   },
 
   onExecuteEventHandlers(handler, ...args) {
-    if (!handlers[handler]) return;
+    if (!this.handlers[handler]) return;
 
     let returnValue = true;
-    for (let h in handlers[handler]) {
+    for (let h of this.handlers[handler]) {
       if (!h.fn(...args)) returnValue = false;
     }
     return returnValue;
