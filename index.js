@@ -1,1 +1,1 @@
-module.exports = require('./src/EventTrapper');
+module.exports = require('./src/RoomTrapper');

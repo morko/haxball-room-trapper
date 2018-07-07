@@ -1,24 +1,25 @@
 {
-  "name": "@haxroomie/EventTrapper",
+  "name": "@haxroomie/RoomTrapper",
   "version": "1.0.0",
-  "description": "Create event traps for HaxBall RoomObject to be able to assign multiple handlers.",
+  "description": "Create event and property traps for HaxBall RoomObject to be able to assign properties and handlers.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test/EventTrapper.js"
+    "test": "mocha test/RoomTrapper.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/morko/haxroomie-EventTrapper.git"
+    "url": "git+https://github.com/saviola777/haxroomie-RoomTrapper.git"
   },
   "keywords": [
     "HaxBall"
   ],
   "author": "Oskari Pöntinen",
+  "contributors": ["Johannes Rückert"],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/morko/haxroomie-EventTrapper/issues"
+    "url": "https://github.com/saviola777/haxroomie-RoomTrapper/issues"
   },
-  "homepage": "https://github.com/morko/haxroomie-EventTrapper#readme",
+  "homepage": "https://github.com/saviola777/haxroomie-RoomTrapper#readme",
   "dependencies": {},
   "devDependencies": {
     "mocha": "^5.2.0",
