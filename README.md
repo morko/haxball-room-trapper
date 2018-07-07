@@ -1,6 +1,6 @@
 # Description
 
-This is a module for intercepting the setting and removing of HaxBall 
+This is a module for intercepting the setting and removing of HaxBall
 [RoomObject](https://github.com/haxball/haxball-issues/wiki/Headless-Host#roomobject)
 event handlers and properties. It has been made for a plugin system for the HaxBall
 headless in mind.
@@ -11,7 +11,7 @@ exactly like with the vanilla room object, but in the background an
 [propertyManager](#propertyManager) manage access to the proxied room object as
 well as storage and execution of event handlers and properties for each plugin.
 
-Instead of allowing a plugin to assign a handler or property to the 
+Instead of allowing a plugin to assign a handler or property to the
 [RoomObject](https://github.com/haxball/haxball-issues/wiki/Headless-Host#roomobject),
 a [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 is created with the method `EventTrapper.createTrappedRoom` and injected to be
@@ -82,7 +82,7 @@ The **eventHandlerManager** is an object that must implement the following funct
 - `onExecuteEventHandlers(room, handler, ...args)`
 
 Where `room` is the proxied room object, `handler` is the name of the handler
-(anything starting with "on") including but not limited to the ones listed in the 
+(anything starting with "on") including but not limited to the ones listed in the
 [RoomObject](https://github.com/haxball/haxball-issues/wiki/Headless-Host#roomobject)
 (e.g. onPlayerJoin), `callback` is a
 [Function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions)
@@ -91,12 +91,12 @@ that had been set through the
 and `identifier` is what was given when a Proxy was created with the
 `createTrappedRoom` method. Purpose of the identifier is to be able to identify
 which plugin is setting or unsetting the handler so it will be possible for
-the **eventHandlerManager** to keep order of handler execution.
+the `eventHandlerManager` to keep order of handler execution.
 
 ### Example eventHandlerManager
 
 See the [EventHandlerManager](./src/EventHandlerManager.js) class for a simple
-example of an eventHandlerManager that does not care about
+example of an `eventHandlerManager` that does not care about
 order of the event handlers and just stores the handlers in a two dimensional
 object structure.
 
@@ -118,5 +118,5 @@ constructor, a default [PropertyManager](./src/PropertyManager.js) will be used.
 ### Example propertyManager
 
 See the [PropertyManager](./src/PropertyManager.js) class for a simple
-example of an propertyManager which just redirects all calls to the proxied room
+example of a `propertyManager` which just redirects all calls to the proxied room
 object.
