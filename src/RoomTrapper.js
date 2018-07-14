@@ -1,26 +1,30 @@
-const PropertyManager = require('./PropertyManager');
+const TrappedRoomManager = require('./TrappedRoomManager');
 
 module.exports = class RoomTrapper {
 
-  constructor(eventHandlerManager, propertyManager) {
-    if (typeof eventHandlerManager === 'undefined') {
-      throw new Error('Missing required argument: eventHandlerManager');
+  constructor(trappedRoomManager) {
+    if (typeof trappedRoomManager === 'undefined') {
+      trappedRoomManager = new TrappedRoomManager();
     }
 
-    if (typeof propertyManager === 'undefined') {
-      propertyManager = new PropertyManager();
-    }
+    RoomTrapper._checkArgumentProperties(trappedRoomManager,
+        'trappedRoomManager', [
+          'onEventHandlerGet',
+          'onEventHandlerHas',
+          'onEventHandlerSet',
+          'onEventHandlerUnset',
+          'onOwnHandlerDescriptorGet',
+          'onOwnHandlerNamesGet',
+          'onExecuteEventHandlers',
+          'onPropertyGet',
+          'onPropertyHas',
+          'onPropertySet',
+          'onPropertyUnset',
+          'onOwnPropertyDescriptorGet',
+          'onOwnPropertyNamesGet',
+        ]);
 
-    RoomTrapper._checkArgumentProperties(eventHandlerManager,
-        'eventHandlerManager', ['onEventHandlerGet', 'onEventHandlerSet',
-          'onEventHandlerUnset', 'onExecuteEventHandlers']);
-
-    this.eventHandlerManager = eventHandlerManager;
-
-    RoomTrapper._checkArgumentProperties(propertyManager, 'propertyManager',
-        ['onPropertyGet', 'onPropertySet', 'onPropertyUnset']);
-
-    this.propertyManager = propertyManager;
+    this.trappedRoomManager = trappedRoomManager;
   }
 
   static _checkArgumentProperties(argument, argumentName, requiredProperties) {
@@ -37,8 +41,7 @@ module.exports = class RoomTrapper {
     if (typeof identifier === 'undefined')
       throw new Error('Missing required argument: identifier');
 
-    let eventHandlerManager = this.eventHandlerManager;
-    let propertyManager = this.propertyManager;
+    let trappedRoomManager = this.trappedRoomManager;
 
     return new Proxy(roomObject, {
 
@@ -47,28 +50,61 @@ module.exports = class RoomTrapper {
         // try to guess if user is getting a handler by the property name
         if (prop.startsWith('on')) {
           try {
-            return eventHandlerManager.onEventHandlerGet(room, prop, identifier);
+            return trappedRoomManager.onEventHandlerGet(room, prop, identifier);
           } finally {
           }
 
           return;
         }
 
-        return propertyManager.onPropertyGet(room, prop, identifier);
+        return trappedRoomManager.onPropertyGet(room, prop, identifier);
+      },
+
+      has(room, prop) {
+        // try to guess if user is getting a handler by the property name
+        if (prop.startsWith('on')) {
+          try {
+            return trappedRoomManager.onEventHandlerHas(room, prop, identifier);
+          } finally {
+          }
+
+          return;
+        }
+
+        return trappedRoomManager.onPropertyHas(room, prop, identifier);
+      },
+
+      getOwnPropertyDescriptor(room, prop) {
+        // try to guess if user is getting a handler by the property name
+        if (prop.startsWith('on')) {
+          try {
+            return trappedRoomManager.onOwnHandlerDescriptorGet(room, prop, identifier);
+          } finally {
+          }
+
+          return;
+        }
+
+        return trappedRoomManager.onOwnPropertyDescriptorGet(room, prop, identifier);
+      },
+
+      ownKeys(room, prop) {
+        return [...new Set(trappedRoomManager.onOwnHandlerNamesGet(room, identifier),
+            trappedRoomManager.onOwnPropertyNamesGet(room, identifier))];
       },
 
       // intercepts the `=` operator for properties of RoomObject
       set(room, prop, value) {
         // try to guess if user is setting a handler by the property name
         if (!prop.startsWith('on')) {
-          propertyManager.onPropertySet(room, prop, value, identifier);
+          trappedRoomManager.onPropertySet(room, prop, value, identifier);
 
           return;
         }
         // if value = falsy => interpret that user is unsetting the handler
         if (!value) {
           try {
-            eventHandlerManager.onEventHandlerUnset(room, prop, identifier);
+            trappedRoomManager.onEventHandlerUnset(room, prop, identifier);
           } finally {
           }
         }
@@ -78,13 +114,14 @@ module.exports = class RoomTrapper {
         }
 
         try {
-          eventHandlerManager.onEventHandlerSet(room, prop, value, identifier);
+          trappedRoomManager.onEventHandlerSet(room, prop, value, identifier);
         } finally {
           // if the haxball room object does not have handler for this event yet
+          // TODO what if the room already had event handlers before?
           if (!room[prop]) {
             room[prop] = (...args) => {
-              return eventHandlerManager.onExecuteEventHandlers(
-                prop, ...args
+              return trappedRoomManager.onExecuteEventHandlers(
+                room, prop, ...args
               );
             }
           }
@@ -95,11 +132,11 @@ module.exports = class RoomTrapper {
       deleteProperty(room, prop) {
         // try to guess if user is deleting a handler by the property name
         if (!prop.startsWith('on')) {
-          propertyManager.onPropertyUnset(room, prop, identifier);
+          trappedRoomManager.onPropertyUnset(room, prop, identifier);
           return;
         }
         try {
-          eventHandlerManager.onEventHandlerUnset(room, prop, identifier);
+          trappedRoomManager.onEventHandlerUnset(room, prop, identifier);
         } finally {
         }
       }
