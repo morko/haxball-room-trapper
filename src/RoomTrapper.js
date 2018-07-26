@@ -54,7 +54,7 @@ module.exports = class RoomTrapper {
           } finally {
           }
 
-          return;
+          return false;
         }
 
         return trappedRoomManager.onPropertyGet(room, prop, identifier);
@@ -68,7 +68,7 @@ module.exports = class RoomTrapper {
           } finally {
           }
 
-          return;
+          return false;
         }
 
         return trappedRoomManager.onPropertyHas(room, prop, identifier);
@@ -78,35 +78,44 @@ module.exports = class RoomTrapper {
         // try to guess if user is getting a handler by the property name
         if (prop.startsWith('on')) {
           try {
-            return trappedRoomManager.onOwnHandlerDescriptorGet(room, prop, identifier);
-          } finally {
-          }
+            return trappedRoomManager.onOwnHandlerDescriptorGet(room, prop,
+                identifier);
+          } finally {}
 
-          return;
+          return false;
         }
 
-        return trappedRoomManager.onOwnPropertyDescriptorGet(room, prop, identifier);
+        return trappedRoomManager.onOwnPropertyDescriptorGet(room, prop,
+            identifier);
       },
 
       ownKeys(room, prop) {
-        return [...new Set(trappedRoomManager.onOwnHandlerNamesGet(room, identifier),
-            trappedRoomManager.onOwnPropertyNamesGet(room, identifier))];
+        return [...new Set(
+            trappedRoomManager.onOwnHandlerNamesGet(room, identifier),
+            trappedRoomManager.onOwnPropertyNamesGet(room, identifier)
+        )];
       },
 
       // intercepts the `=` operator for properties of RoomObject
       set(room, prop, value) {
+        let returnValue = false;
         // try to guess if user is setting a handler by the property name
         if (!prop.startsWith('on')) {
-          trappedRoomManager.onPropertySet(room, prop, value, identifier);
+          try {
+            returnValue = trappedRoomManager.onPropertySet(room, prop, value,
+                identifier);
+          } finally {}
 
-          return;
+          return returnValue !== false;
         }
         // if value = falsy => interpret that user is unsetting the handler
         if (!value) {
           try {
-            trappedRoomManager.onEventHandlerUnset(room, prop, identifier);
-          } finally {
-          }
+            let returnValue = trappedRoomManager.onEventHandlerUnset(room, prop,
+                identifier);
+          } finally {}
+
+          return returnValue !== false;
         }
 
         if (typeof value !== 'function') {
@@ -114,7 +123,8 @@ module.exports = class RoomTrapper {
         }
 
         try {
-          trappedRoomManager.onEventHandlerSet(room, prop, value, identifier);
+          let returnValue = trappedRoomManager.onEventHandlerSet(room, prop,
+              value, identifier);
         } finally {
           // if the haxball room object does not have handler for this event yet
           // TODO what if the room already had event handlers before?
@@ -126,19 +136,29 @@ module.exports = class RoomTrapper {
             }
           }
         }
+
+        return returnValue !== false;
       },
 
       // intercepts the delete keyword for properties of RoomObject
       deleteProperty(room, prop) {
+        let returnValue = false;
         // try to guess if user is deleting a handler by the property name
         if (!prop.startsWith('on')) {
-          trappedRoomManager.onPropertyUnset(room, prop, identifier);
-          return;
+          try {
+            returnValue = trappedRoomManager.onPropertyUnset(room, prop,
+                identifier);
+          } finally {}
+
+          return returnValue !== false;
         }
+
         try {
-          trappedRoomManager.onEventHandlerUnset(room, prop, identifier);
-        } finally {
-        }
+          let returnValue = trappedRoomManager.onEventHandlerUnset(room, prop,
+              identifier);
+        } finally {}
+
+        return returnValue !== false;
       }
     })
   }

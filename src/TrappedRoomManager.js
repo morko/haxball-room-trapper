@@ -118,7 +118,7 @@ module.exports = class TrappedRoomManager {
 
     let returnValue = true;
     for (let h of this.handlers[handler]) {
-      if (!h.fn(...args)) returnValue = false;
+      if (h.fn(...args) === false) returnValue = false;
     }
     return returnValue;
   }
