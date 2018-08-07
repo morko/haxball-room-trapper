@@ -47,6 +47,8 @@ module.exports = class RoomTrapper {
 
       // intercepts getting properties
       get(room, prop) {
+        prop = String(prop);
+
         // try to guess if user is getting a handler by the property name
         if (prop.startsWith('on')) {
           try {
@@ -61,6 +63,8 @@ module.exports = class RoomTrapper {
       },
 
       has(room, prop) {
+        prop = String(prop);
+
         // try to guess if user is getting a handler by the property name
         if (prop.startsWith('on')) {
           try {
@@ -75,6 +79,8 @@ module.exports = class RoomTrapper {
       },
 
       getOwnPropertyDescriptor(room, prop) {
+        prop = String(prop);
+
         // try to guess if user is getting a handler by the property name
         if (prop.startsWith('on')) {
           try {
@@ -98,6 +104,7 @@ module.exports = class RoomTrapper {
 
       // intercepts the `=` operator for properties of RoomObject
       set(room, prop, value) {
+        prop = String(prop);
         let returnValue = false;
         // try to guess if user is setting a handler by the property name
         if (!prop.startsWith('on')) {
@@ -142,6 +149,8 @@ module.exports = class RoomTrapper {
 
       // intercepts the delete keyword for properties of RoomObject
       deleteProperty(room, prop) {
+        prop = String(prop);
+
         let returnValue = false;
         // try to guess if user is deleting a handler by the property name
         if (!prop.startsWith('on')) {

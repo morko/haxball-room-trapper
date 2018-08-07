@@ -78,12 +78,18 @@ trappedRoom.onPlayerJoin = '';
 The **trappedRoomManager** is an object that must implement the following functions:
 
 - `onEventHandlerGet(room, handler, identifier)`
+- `onEventHandlerHas(room, handler, identifier)`
 - `onEventHandlerSet(room, handler, callback, identifier)`
 - `onEventHandlerUnset(room, handler, identifier)`
+- `onOwnHandlerDescriptorGet(room, handler, identifier)`
+- `onOwnHandlerNamesGet(room, identifier)`
 - `onExecuteEventHandlers(room, handler, ...args)`
 - `onPropertyGet(room, property, identifier)`
+- `onPropertyHas(room, property, identifier)`
 - `onPropertySet(room, property, value, identifier)`
 - `onPropertyUnset(room, property, identifier)`
+- `onOwnPropertyDescriptorGet(room, property, identifier)`
+- `onOwnPropertyNamesGet(room, identifier)`
 
 Where `room` is the proxied room object, `handler` is the name of the handler
 (anything starting with "on") including but not limited to the ones listed in the
@@ -101,7 +107,7 @@ the `eventHandlerManager` to keep order of handler execution.
 ### Example trappedRoomManager
 
 See the [TrappedRoomManager](./src/TrappedRoomManager.js) class for a simple
-example of an `eventHandlerManager` that does not care about
+example of an `trappedRoomManager` that does not care about
 order of the event handlers and just stores the handlers in a two dimensional
 object structure, and allows direct access to room properties. Feel free to
 extend this class if you don't want to implement all functions.
