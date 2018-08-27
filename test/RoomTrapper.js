@@ -12,7 +12,6 @@ function createManager() {
     onEventHandlerSet: sinon.fake(),
     onEventHandlerUnset: sinon.fake(),
     onOwnHandlerDescriptorGet: sinon.fake(),
-    onOwnHandlerNamesGet: sinon.fake(),
     onExecuteEventHandlers: sinon.fake(),
     onPropertyGet: sinon.fake(),
     onPropertyHas: sinon.fake(),

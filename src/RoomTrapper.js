@@ -14,7 +14,6 @@ module.exports = class RoomTrapper {
           'onEventHandlerSet',
           'onEventHandlerUnset',
           'onOwnHandlerDescriptorGet',
-          'onOwnHandlerNamesGet',
           'onExecuteEventHandlers',
           'onPropertyGet',
           'onPropertyHas',
@@ -95,9 +94,8 @@ module.exports = class RoomTrapper {
             identifier);
       },
 
-      ownKeys(room, prop) {
+      ownKeys(room) {
         return [...new Set(
-            trappedRoomManager.onOwnHandlerNamesGet(room, identifier),
             trappedRoomManager.onOwnPropertyNamesGet(room, identifier)
         )];
       },
@@ -130,18 +128,19 @@ module.exports = class RoomTrapper {
         }
 
         try {
-          let returnValue = trappedRoomManager.onEventHandlerSet(room, prop,
-              value, identifier);
-        } finally {
           // if the haxball room object does not have handler for this event yet
           // TODO what if the room already had event handlers before?
           if (!room[prop]) {
             room[prop] = (...args) => {
               return trappedRoomManager.onExecuteEventHandlers(
-                room, prop, ...args
+                  room, prop, ...args
               );
             }
           }
+
+          let returnValue = trappedRoomManager.onEventHandlerSet(room, prop,
+              value, identifier);
+        } finally {
         }
 
         return returnValue !== false;

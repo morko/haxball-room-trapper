@@ -82,7 +82,6 @@ The **trappedRoomManager** is an object that must implement the following functi
 - `onEventHandlerSet(room, handler, callback, identifier)`
 - `onEventHandlerUnset(room, handler, identifier)`
 - `onOwnHandlerDescriptorGet(room, handler, identifier)`
-- `onOwnHandlerNamesGet(room, identifier)`
 - `onExecuteEventHandlers(room, handler, ...args)`
 - `onPropertyGet(room, property, identifier)`
 - `onPropertyHas(room, property, identifier)`

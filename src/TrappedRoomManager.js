@@ -44,22 +44,6 @@ module.exports = class TrappedRoomManager {
   }
 
   /**
-   * Return an array of handler names for the trapped room with the given
-   * identifier.
-   */
-  onOwnHandlerNamesGet(room, identifier) {
-    handlerNames = [];
-
-    for (let handlerName in this.handlers) {
-      if (this.handlers[handlerName].hasOwnProperty(identifier)) {
-        handlerNames.push(handlerName);
-      }
-    }
-
-    return handlerNames;
-  }
-
-  /**
    * Return an array of property names of the proxied room.
    */
   onOwnPropertyNamesGet(room, identifier) {
