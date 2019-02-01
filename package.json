@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/morko/haxroomie-EventTrapper.git"
+    "url": "git+https://github.com/morko/haxroomie-RoomTrapper.git"
   },
   "keywords": [
     "HaxBall"
@@ -17,9 +17,9 @@
   "contributors": ["Johannes Rückert"],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/morko/haxroomie-EventTrapper/issues"
+    "url": "https://github.com/morko/haxroomie-RoomTrapper/issues"
   },
-  "homepage": "https://github.com/morko/haxroomie-EventTrapper#readme",
+  "homepage": "https://github.com/morko/haxroomie-RoomTrapper#readme",
   "dependencies": {},
   "devDependencies": {
     "mocha": "^5.2.0",

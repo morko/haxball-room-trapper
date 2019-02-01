@@ -26,14 +26,14 @@ normally.
 
 # Installation
 
-`npm install git+https://git@github.com/morko/haxroomie-EventTrapper.git`
+`npm install git+https://git@github.com/morko/haxroomie-RoomTrapper.git`
 
 For browsers you can use browserify.
 
 e.g. to create a standalone package to be inserted into `window.roomTrapper`:
 
 ```
-git clone https://git@github.com/morko/haxroomie-EventTrapper.git
+git clone https://git@github.com/morko/haxroomie-RoomTrapper.git
 cd haxroomie-RoomTrapper
 browserify --standalone roomTrapper > roomTrapper.js
 ```
