@@ -26,23 +26,22 @@ normally.
 
 # Installation
 
-`npm install git+https://git@github.com/morko/haxroomie-RoomTrapper.git`
+`npm install git+https://git@github.com/morko/haxball-room-trapper.git`
 
 For browsers you can use browserify.
 
 e.g. to create a standalone package to be inserted into `window.roomTrapper`:
 
 ```
-git clone https://git@github.com/morko/haxroomie-RoomTrapper.git
-cd haxroomie-RoomTrapper
+git clone https://git@github.com/morko/haxball-room-trapper.git
+cd haxball-room-trapper
 browserify --standalone roomTrapper > roomTrapper.js
 ```
 
 # Usage
 
 ```
-const RoomTrapper = require('@haxroomie/RoomTrapper');
-const TrappedRoomManager = require('@haxroomie/TrappedRoomManager');
+const { RoomTrapper, TrappedRoomManager } = require('haxball-room-trapper');
 
 let fakeRoomObject = {};
 

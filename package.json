@@ -1,5 +1,5 @@
 {
-  "name": "@haxroomie/RoomTrapper",
+  "name": "haxball-room-trapper",
   "version": "1.1.1",
   "description": "Create event and property traps for HaxBall RoomObject to be able to assign properties and handlers.",
   "main": "index.js",
@@ -8,18 +8,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/morko/haxroomie-RoomTrapper.git"
+    "url": "git+https://github.com/morko/haxball-room-trapper.git"
   },
   "keywords": [
     "HaxBall"
   ],
   "author": "Oskari Pöntinen",
-  "contributors": ["Johannes Rückert"],
+  "contributors": [
+    "Johannes Rückert"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/morko/haxroomie-RoomTrapper/issues"
+    "url": "https://github.com/morko/haxball-room-trapper/issues"
   },
-  "homepage": "https://github.com/morko/haxroomie-RoomTrapper#readme",
+  "homepage": "https://github.com/morko/haxball-room-trapper#readme",
   "dependencies": {},
   "devDependencies": {
     "mocha": "^5.2.0",
