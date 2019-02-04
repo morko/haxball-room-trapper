@@ -1,7 +1,7 @@
 const RoomTrapper = require('./src/RoomTrapper');
-const RoomTrapperManager = require('./src/RoomTrapperManager');
+const TrappedRoomManager = require('./src/TrappedRoomManager');
 
 module.exports = {
   RoomTrapper,
-	RoomTrapperManager
+	TrappedRoomManager
 };
