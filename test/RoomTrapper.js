@@ -3,7 +3,7 @@ const sinon = require('sinon');
 
 // TODO add coverage for other methods
 
-const RoomTrapper = require('..');
+const { RoomTrapper } = require('..');
 
 function createManager() {
   return {
