@@ -116,7 +116,7 @@ module.exports = class RoomTrapper {
         // if value = falsy => interpret that user is unsetting the handler
         if (!value) {
           try {
-            let returnValue = trappedRoomManager.onEventHandlerUnset(room, prop,
+            returnValue = trappedRoomManager.onEventHandlerUnset(room, prop,
                 identifier);
           } finally {}
 
@@ -138,7 +138,7 @@ module.exports = class RoomTrapper {
             }
           }
 
-          let returnValue = trappedRoomManager.onEventHandlerSet(room, prop,
+          returnValue = trappedRoomManager.onEventHandlerSet(room, prop,
               value, identifier);
         } finally {
         }
@@ -162,7 +162,7 @@ module.exports = class RoomTrapper {
         }
 
         try {
-          let returnValue = trappedRoomManager.onEventHandlerUnset(room, prop,
+          returnValue = trappedRoomManager.onEventHandlerUnset(room, prop,
               identifier);
         } finally {}
 
