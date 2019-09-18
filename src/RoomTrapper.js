@@ -123,10 +123,6 @@ module.exports = class RoomTrapper {
           return returnValue !== false;
         }
 
-        if (typeof value !== 'function') {
-          throw new Error(prop + ': value type must be a function.');
-        }
-
         try {
           // if the haxball room object does not have handler for this event yet
           // TODO what if the room already had event handlers before?
